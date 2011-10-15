@@ -1,0 +1,5 @@
+useDynLib(predictionet)
+
+importFrom(penalized, optL1, penalized, predict)
+
+exportPattern("^[^\\.]")
