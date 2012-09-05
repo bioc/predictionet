@@ -8,7 +8,7 @@ pdf:
 	cp -f vignette-src/predictionet-regrnet_design.pdf .
 	cp -f vignette-src/predictionet-cytoscape.pdf .
 	cp -f vignette-src/predictionet-pn_webapp_ras.pdf .
-	"${R_HOME}/bin/R" --vanilla -e "library(pgfSweave); Stangle('predictionet.Rnw'); pgfSweave('predictionet.Rnw');"
+	"${R_HOME}/bin/R" --vanilla -e "library(knitr); Stangle('predictionet.Rnw'); knit('predictionet.Rnw');"
 	pdflatex predictionet
 	bibtex predictionet
 	pdflatex predictionet
