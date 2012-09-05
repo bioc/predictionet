@@ -51,9 +51,6 @@
 \SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE, keep.source=TRUE}
 
 <<setup,echo=FALSE,eval=TRUE>>=
-## setup of pgfSweave
-library(pgfSweave)
-setCacheDir("cache")
 ## initialize seed
 set.seed(123)
 @
@@ -354,7 +351,7 @@ goi <- dimnames(annot.ras)[[1]][order(abs(log2(annot.ras[ ,"fold.change"])), dec
 
 Now run the network inference on the reduced \Robject{expO.colon.ras} dataset:
 
-<<firstnetinf,echo=TRUE,results=hide,cache=TRUE,eval=TRUE>>=
+<<firstnetinf2,echo=TRUE,results=hide,cache=TRUE,eval=TRUE>>=
 mynet <- netinf(data=data.ras[ ,goi], priors=pn.priors.counts[goi,goi], priors.count=TRUE, priors.weight=0.5, maxparents=4, method="regrnet", seed=54321)
 @
 
