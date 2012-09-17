@@ -1,5 +1,5 @@
-\name{adj.descent}
-\alias{adj.descent}
+\name{adj.get.hops}
+\alias{adj.get.hops}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Function to identify all children of a parent
@@ -8,19 +8,11 @@ Function to identify all children of a parent
 This function uses a depth-first search algorithm to identify all the children (and their corresponding depth) of a node.
 }
 \usage{
-adj.descent(adjmat, from, depth)
+adj.get.hops(adjmat)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{adjmat}{
-adjacency matrix; parents in rows, children in columns
-}
-  \item{from}{
-name or index of the parent node
-}
-  \item{depth}{
-numeric representing the depth of the search for the children; if \code{depth} is missing or negative, all children are returned
-}
+  \item{adjmat}{ adjacency matrix; parents in rows, children in columns }
 }
 \details{
 The algorithm is based on the depth-first search.
@@ -47,7 +39,7 @@ Benjamin Haibe-Kains
 ## check whether a list of two nodes are children of another node
 set.seed(54321)
 mytopo <- matrix(sample(0:1, 100, replace=TRUE, prob=c(0.7,0.3)), nrow=10, dimnames=list(LETTERS[1:10], LETTERS[1:10]))
-adj.descent(adjmat=mytopo, from="A")
+adj.get.hops(adjmat=mytopo)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

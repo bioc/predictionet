@@ -2,7 +2,7 @@
 	
 #	models<-res.ensemble$models
 	mynames<-colnames(data)
-	models.parents<-matrix(Inf,nc=ncol(models),nr=nrow(models))
+	models.parents<-matrix(Inf,ncol=ncol(models),nrow=nrow(models))
 	colnames(models.parents)<-models[1,]
 	score.causal <- matrix(Inf, nrow=ncol(data), ncol=ncol(data), dimnames=list(colnames(data), colnames(data)))
 	
@@ -10,7 +10,7 @@
 		tmp.adj <- matrix(0,ncol=ncol(data),nrow=ncol(data), dimnames=list(colnames(data), colnames(data)))
 		tmp.adj[models[1,i],models[2:nrow(models),i]]<-tmp.adj[models[2:nrow(models),i],models[1,i]]<-1
 		
-		trip <- (.network2triplets(tmp.adj))
+		trip <- (.network2triplets(tmp.adj,models[1,i]))
 		
 		if(length(trip)>0){
 			if(length(trip)==3){

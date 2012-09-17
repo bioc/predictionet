@@ -1,12 +1,13 @@
-\name{netinf.cv}
-\alias{netinf.cv}
+\name{predictionet.stability.cv}
+\alias{predictionet.stability.cv}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{ Function performing network inference by combining priors and genomic data }
+\title{ Function inferring networks in cross-validation }
 \description{
-The function \code{netinf.cv} perform a cross-validation loop and infers a gene network by combining priors and genomic data in each fold. This allows to estimate the predictive ability of the inferred network as well as edge stability.
+The function \code{predictionet.stability.cv} infers networks in cross-validation (compared to netinf.cv no regression is carried out, thus less computational cost but no prediction scores)
+
 }
 \usage{
-netinf.cv(data, categories, perturbations, priors, predn, priors.count = TRUE, priors.weight = 0.5, maxparents = 3, subset, method = c("regrnet", "bayesnet"), ensemble = FALSE, ensemble.maxnsol=3, predmodel = c("linear", "linear.penalized", "cpt"), nfold = 10, causal = TRUE, seed, bayesnet.maxcomplexity = 0, bayesnet.maxiter = 100, verbose = FALSE) 
+predictionet.stability.cv(data, categories, perturbations, priors, predn, priors.count = TRUE, priors.weight = 0.5, maxparents = 3, subset, method = c("regrnet", "bayesnet"), ensemble = FALSE, ensemble.maxnsol = 3, nfold = 10, causal = TRUE, seed, bayesnet.maxcomplexity = 0, bayesnet.maxiter = 100) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,29 +23,21 @@ netinf.cv(data, categories, perturbations, priors, predn, priors.count = TRUE, p
   \item{method}{ \code{regrnet} for regression-based network inference, \code{bayesnet} for bayesian network inference with the \code{catnet} package.}
   \item{ensemble}{\code{TRUE} if the ensemble approach should be used, \code{FALSE} otherwise. }
    \item{ensemble.maxnsol}{Number of equivalent solutions chosen at each step.}
-	\item{predmodel }{ type of predictive model to fit; \code{linear} for linear regression model, \code{linear.penalized} for regularized linear regression model, \code{cpt} for conditional probability tables estimated after discretization of the data. }
 	\item{nfold}{ number of folds for the cross-validation. }
 	\item{causal}{ 'TRUE' if the causality should be inferred from the data, 'FALSE' otherwise }
 	\item{seed}{ set the seed to make the cross-validation and network inference deterministic. }
 	\item{bayesnet.maxcomplexity}{ maximum complexity for bayesian network inference, see Details. }
-	\item{bayesnet.maxiter}{ maximum number of iterations for bayesian network inference, see Details. }
-	\item{verbose}{ \code{TRUE} if messages should be printed, \code{FALSE} otherwise. }
-}
-\details{
-	\code{bayesnet.maxcomplexity} and \code{bayesnet.maxiter} are parameters to be passed to the network inference method (see \link[catnet]{cnSearchOrder} and \link[catnet]{cnSearchSA} from the \code{catnet} package for more details).
-}
+	\item{bayesnet.maxiter}{ maximum number of iterations for bayesian network inference, see Details. }}
+%%\details{
+%%
+%%}
 \value{
 	\item{method }{name of the method used for network inference. }
 	\item{topology }{ topology of the model inferred using the entire dataset. }
-	\item{topology.coeff }{ if method='regrnet' \code{topology.coeff} contains an adjacency matrix with the coefficients used in the local regression model; parents in rows, children in columns. Additionally the beta_0 values for each model in the first row of the matrix}
 	\item{topology.cv }{ topology of the networks inferred at each fold of the cross-validation. }
-	\item{topology.coeff.cv }{ if method='regrnet' \code{topology.coeff} contains an adjacency matrix with the coefficients used in the local regression model; parents in rows, children in columns. Additionally the beta_0 values for each model in the first row of the matrix. Inferred at each fold of the cross-validation}
-	\item{prediction.score.cv }{ list of prediction scores (R2, NRMSE, MCC) computed at each fold of the cross-validation. }
 	\item{edge.stability }{ stability of the edges inferred during cross-validation; only the stability of the edges present in the network inferred using the entire dataset is reported. }
 	\item{edge.stability.cv }{stability of the edges inferred during cross-validation. }
-	\item{edge.relevance }{ mean relevance score for each across folds in cross-validation. }
-	\item{edge.relevance.cv }{ relevance score for each across computed during cross-validation. }
-}
+	}
 %%\references{
 %% ~put references to the literature/web site here ~
 %%}
@@ -78,7 +71,7 @@ mypert <- pert[ , goi, drop=FALSE]
 ## regression-based network inference
 ########################
 ## number of fold for cross-validation
-res <- netinf.cv(data=mydata, categories=3, perturbations=mypert, priors=mypriors, priors.weight=0.5, method="regrnet", nfold=3, seed=54321)
+res <-netinf.cv(data=mydata, categories=3, perturbations=mypert, priors=mypriors, priors.weight=0.5, method="regrnet", nfold=3, seed=54321)
 
 ## MCC for predictions in cross-validation
 print(res$prediction.score.cv)
