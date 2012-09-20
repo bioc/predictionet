@@ -160,11 +160,11 @@ SEXP mrnet_adapted2(SEXP Rdata, SEXP Rnamat, SEXP Rprior, SEXP Rprior_weight, SE
 			res[j*n+i]=res[j*n+i]/maxmrmr;
 		}
 	}
-	cout << "normalized mrmr matrix"<<endl;
+	/*cout << "normalized mrmr matrix"<<endl;
 	for( unsigned int i=0; i< n; ++i ) {
 		cout << res[i]<< " ";
 	}
-	cout<<endl;
+	cout<<endl;*/
 	for( unsigned int i=0; i< n; ++i ){
 		for( unsigned int j=0; j<n; ++j ){ 
 			res[i*n+j] = (1- (*prior_weight))*res[i*n+j] + (*prior_weight) * prior[i*n+j];
